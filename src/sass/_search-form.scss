@@ -1,0 +1,15 @@
+.search-form {
+  background-color: red;
+  display: flex;
+  position: relative;
+}
+
+.search-form input {
+  min-width: 250px;
+  padding-right: 50px;
+}
+
+.search-form button {
+  position: absolute;
+  right: 0;
+}
