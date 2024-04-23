@@ -11,7 +11,7 @@ let currentQuery = null;
 
 const searchForm = document.querySelector('.search-form');
 const gallery = document.querySelector('.gallery');
-const loadMore = document.querySelector('.load-more');
+// const loadMore = document.querySelector('.load-more');
 const target = document.querySelector('.js-guard');
 
 const options = {
@@ -45,11 +45,11 @@ async function onSubmitSearchQuery(evt) {
       observer.observe(target);
       Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
 
-      if (totalHits > currentPage * 40) {
-        loadMore.hidden = false;
-      } else {
-        loadMore.hidden = true;
-      }
+      // if (totalHits > currentPage * 40) {
+      //   loadMore.hidden = false;
+      // } else {
+      //   loadMore.hidden = true;
+      // }
       // gallery.innerHTML = markup;
     }
   } catch (error) {
