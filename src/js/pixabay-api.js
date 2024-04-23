@@ -4,21 +4,22 @@ const BASE_URL = 'https://pixabay.com/api/';
 
 axios.defaults.baseURL = BASE_URL;
 
-async function fetchGallery(request) {
+async function fetchImage(query, page = 1) {
   const searchParams = new URLSearchParams({
     key: '43520057-d4110ce2722b475a1deefaa82',
-    q: `${request}`,
+    q: `${query}`,
     image_type: 'photo',
     orientation: 'horizontal',
     safesearch: true,
-    page: 1,
+    page: `${page}`,
     per_page: 40,
   });
+
   const response = await axios(`?${searchParams}`);
-  return response.data
+  return response.data;
 }
 
-function createGalleryMarkup(arr) {
+function createPhotoCard(arr) {
   return arr
     .map(
       ({
@@ -29,9 +30,10 @@ function createGalleryMarkup(arr) {
         views,
         comments,
         downloads,
-      }) => `<a class="gallery__link" href="${largeImageURL}">
-    <div class="photo-card">
-      <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+      }) => `<div class="photo-card">
+        <a href="${largeImageURL}">
+        <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+        </a>
         <div class="info">
           <p class="info-item">
             <b>Likes</b>
@@ -50,8 +52,7 @@ function createGalleryMarkup(arr) {
             <span>${downloads}</span>
           </p>
         </div>
-      </div>
-    </a>`
+      </div>`
     )
     .join('');
 }
@@ -60,4 +61,8 @@ function renderGallery(selector, markup) {
   selector.innerHTML = markup;
 }
 
-export { fetchGallery, createGalleryMarkup, renderGallery };
+function appendGallery(selector, markup) {
+  selector.insertAdjacentHTML('beforeend', markup);
+}
+
+export { fetchImage, createPhotoCard, renderGallery, appendGallery };
