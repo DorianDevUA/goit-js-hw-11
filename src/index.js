@@ -88,6 +88,9 @@ async function onLoad(entries, observer) {
 
         if (totalHits <= currentPage * 40) {
           observer.unobserve(target);
+          Notiflix.Notify.warning(
+            `We're sorry, but you've reached the end of search results.`
+          );
         }
       } catch (error) {
         console.log('Error fetching images:', error);
