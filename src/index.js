@@ -18,6 +18,7 @@ loadMore.addEventListener('click', onLoadMore);
 
 async function onSubmitSearchQuery(evt) {
   evt.preventDefault();
+  currentPage = 1;
   currentQuery = evt.target.elements.searchQuery.value;
 
   try {
@@ -50,13 +51,18 @@ async function onSubmitSearchQuery(evt) {
 
 async function onLoadMore() {
   currentPage += 1;
-  const { hits, totalHits } = await fetchImage(currentQuery, currentPage);
-  const markup = createPhotoCard(hits);
-  appendGallery(gallery, markup);
 
-  if (totalHits > currentPage * 40) {
-    loadMore.hidden = false;
-  } else {
-    loadMore.hidden = true;
+  try {
+    const { hits, totalHits } = await fetchImage(currentQuery, currentPage);
+    const markup = createPhotoCard(hits);
+    appendGallery(gallery, markup);
+
+    if (totalHits > currentPage * 40) {
+      loadMore.hidden = false;
+    } else {
+      loadMore.hidden = true;
+    }
+  } catch (error) {
+    console.log('Error fetching images:', error);
   }
 }
